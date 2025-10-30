@@ -13,7 +13,7 @@ The table below is updated regularly with new problems.
 | #  | Problem Name | Language       | Solution        |
 |----|--------------|----------------|-----------------|
 |   | []() | Python, Java | 📂 [Click Here]() |
-|   | []() | Python, Java | 📂 [Click Here]() |
+| 2 | [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | Python, Java | 📂 [Click Here](https://github.com/Vaibhav-12521/LeetCode-Solutions/blob/main/2.%20Add%20Two%20Numbers.md) |
 
 
 ---
