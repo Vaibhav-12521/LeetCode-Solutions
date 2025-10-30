@@ -43,12 +43,15 @@ The table below is updated regularly with new problems.
 
 ## 🔗 Useful Links
 
-- [My LeetCode Profile](https://leetcode.com/u/vaibhav125s/)
-- [Linkedin](https://www.linkedin.com/in/vaibhavsingh125/)
-
-
-
-<a href="https://leetcode.com/u/vaibhav125s/" target="_blank"> <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Profile"/> </a> <a href="https://www.linkedin.com/in/vaibhavsingh125/" target="_blank"> <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile"/> </a>
+<a href="https://leetcode.com/u/vaibhav125s/" target="_blank"> 
+  <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Profile"/> 
+</a> 
+<a href="https://www.linkedin.com/in/vaibhavsingh125/" target="_blank"> 
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile"/> 
+</a>
+<a href="https://github.com/Vaibhav-12521" target="_blank"> 
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/> 
+</a>
 
 
 ---
