@@ -1,0 +1,202 @@
+# 🧮 LeetCode Problem 2 — Add Two Numbers  
+
+**Difficulty:** Medium  
+**Language Used:** C++  
+**Topic:** Linked List  
+
+---
+
+## 🧾 Problem Statement  
+
+You are given two non-empty linked lists representing two non-negative integers.  
+The digits are stored in **reverse order**, and each of their nodes contains a single digit.  
+
+Add the two numbers and return the **sum as a linked list**.  
+
+You may assume the two numbers do not contain any leading zeros, except the number 0 itself.
+
+---
+
+## 💡 Example 1  
+
+**Input:**  
+```
+
+l1 = [2,4,3]
+l2 = [5,6,4]
+
+```
+
+**Output:**  
+```
+
+[7,0,8]
+
+```
+
+**Explanation:**  
+The digits represent numbers `342` and `465`.  
+Adding them gives `807`, and in reverse order we get `[7,0,8]`.
+
+---
+
+## 💡 Example 2  
+
+**Input:**  
+```
+
+l1 = [0]
+l2 = [0]
+
+```
+
+**Output:**  
+```
+
+[0]
+
+```
+
+---
+
+## 💡 Example 3  
+
+**Input:**  
+```
+
+l1 = [9,9,9,9,9,9,9]
+l2 = [9,9,9,9]
+
+```
+
+**Output:**  
+```
+
+[8,9,9,9,0,0,0,1]
+
+````
+
+---
+
+## ⚙️ Constraints  
+- The number of nodes in each linked list is in the range **[1, 100]**  
+- `0 <= Node.val <= 9`  
+- It is guaranteed that the list represents a number that does not have leading zeros  
+
+---
+
+## 🧠 Step-by-Step Solution Approach  
+
+### 🔹 Step 1 — Understand the Problem  
+Each linked list stores digits in reverse order.  
+You must simulate the **addition of two numbers digit by digit**, just like you do on paper.
+
+---
+
+### 🔹 Step 2 — Create a Dummy Node  
+We use a **dummy node** to simplify list creation.  
+A pointer `current` will keep track of where to insert new nodes.
+
+---
+
+### 🔹 Step 3 — Traverse Both Lists  
+Loop through both linked lists until all digits are processed.  
+At each step:  
+- Add values of the two nodes (if present) + carry from previous step.  
+- Create a new node for `(sum % 10)`.  
+- Update `carry = sum / 10`.
+
+---
+
+### 🔹 Step 4 — Handle the Remaining Carry  
+If there’s a carry left after the final addition, create one last node for it.
+
+---
+
+### 🔹 Step 5 — Return the Result  
+Return `dummy->next`, which points to the head of the new linked list.
+
+---
+
+## 💻 C++ Code Implementation  
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(); // Dummy head
+        ListNode* current = dummy;
+        int carry = 0;
+
+        while (l1 || l2 || carry) {
+            int sum = carry;
+            if (l1) {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            if (l2) {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+
+            carry = sum / 10;
+            current->next = new ListNode(sum % 10);
+            current = current->next;
+        }
+
+        return dummy->next;
+    }
+};
+````
+
+---
+
+## 🧩 Dry Run Example
+
+Let’s dry run with:
+`l1 = [2,4,3]`, `l2 = [5,6,4]`
+
+| Step | l1 | l2 | sum | carry | new node |
+| ---- | -- | -- | --- | ----- | -------- |
+| 1    | 2  | 5  | 7   | 0     | [7]      |
+| 2    | 4  | 6  | 10  | 1     | [0]      |
+| 3    | 3  | 4  | 8   | 0     | [8]      |
+
+**Result:** `[7,0,8]`
+
+---
+
+## 🧾 Summary
+
+✅ Used Linked List traversal
+✅ Managed carry during addition
+✅ Clean O(n) solution with O(1) extra space
+
+---
+
+### 📎 Connect with Me
+
+<p align="center">
+  <a href="https://github.com/Vaibhav-12521" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/>
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://leetcode.com/u/vaibhav125s/" target="_blank">
+    <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Profile"/>
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/vaibhavsingh125/" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile"/>
+  </a>
+</p>
