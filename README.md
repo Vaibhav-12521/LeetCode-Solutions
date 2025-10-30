@@ -18,11 +18,11 @@ The table below is updated regularly with new problems.
 
 ---
 
-## 📌 How to Use
+## 🧾 How to Use
 
-1. Browse through the table above.
-2. Click on any problem name to view the original problem statement.
-3. Click on **Click Here** under the Solution column to open the respective folder.
+1. Browse through the table above.  
+2. Click on the problem name to open it on **LeetCode**.  
+3. Click on **Click Here** to open the corresponding solution file in this repo.
 
 ---
 
@@ -34,16 +34,22 @@ The table below is updated regularly with new problems.
 
 ---
 
-## 📈 Goal
+## 🎯 Goal
 
-Solve one problem every day, share clean and efficient solutions, and track learning progress over time.
+> 🗓️ Solve at least one problem daily, document solutions, and grow stronger at problem-solving.  
+> This repository serves as my digital notebook for tracking consistency and performance.
 
 ---
 
 ## 🔗 Useful Links
 
-- [GeeksforGeeks Problem of the Day](https://practice.geeksforgeeks.org/problem-of-the-day)
-- [My GfG Profile](https://www.geeksforgeeks.org/user/vaibhavsingh12521/)
+- [My LeetCode Profile](https://leetcode.com/u/vaibhav125s/)
+- [Linkedin](https://www.linkedin.com/in/vaibhavsingh125/)
+
+
+
+<a href="https://leetcode.com/u/vaibhav125s/" target="_blank"> <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode Profile"/> </a> <a href="https://www.linkedin.com/in/vaibhavsingh125/" target="_blank"> <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile"/> </a>
+
 
 ---
 
