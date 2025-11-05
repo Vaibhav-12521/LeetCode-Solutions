@@ -62,6 +62,26 @@ Output: "A"
 ## 💻 C Solution
 
 ```c
+char* convert(char* s, int numRows) {
+    int len = 0; 
+    while (s[len]) len++;
+    if (numRows == 1 || numRows >= len) return s;
+
+    char* res = (char*)malloc(len + 1);
+    int cycle = 2 * numRows - 2, idx = 0;
+
+    for (int i = 0; i < numRows; i++) {
+        for (int j = i; j < len; j += cycle) {
+            res[idx++] = s[j];
+            if (i != 0 && i != numRows - 1) {
+                int k = j + cycle - 2 * i;
+                if (k < len) res[idx++] = s[k];
+            }
+        }
+    }
+    res[idx] = '\0';
+    return res;
+}
 
 
 ```
@@ -69,62 +89,45 @@ Output: "A"
 ## 🐍 Python Solution
 
 ```python
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows == 1 or numRows >= len(s):
+            return s
+        
+        rows = [''] * numRows
 
+        currow, step = 0, 1
+
+        for i in s:
+            rows[currow] += i
+            if currow == 0:
+                step = 1
+            elif currow == numRows - 1:
+                step = -1
+            currow += step
+        
+        return ''.join(rows)
 
 ```
 ---
 
+
+
+
 ## ⚙️ Step-by-Step Solution
+1. **Handle simple cases** — If `numRows == 1` or `numRows >= len(s)`, return `s` directly (no zigzag needed).
 
-### 🧩 Step-by-Step Solution
+2. **Prepare storage** — Create a list `rows` of strings, one for each row.
 
-#### **Step 1: Understand what a palindrome is**
+3. **Track direction** — Use an index `i` for the current row and a `step` (either `1` for down or `-1` for up).
 
-A **palindrome** is a string that reads the same from both directions, e.g. `"racecar"`, `"abba"`, `"a"`.
+4. **Iterate through characters** — For each character in `s`, append it to `rows[i]`.
 
----
+5. **Change direction** — When you hit the top (`i == 0`) or bottom (`i == numRows - 1`), reverse `step`.
 
-#### **Step 2: Idea — Expand around the center**
+6. **Move to next row** — Update `i` by adding `step`.
 
-Every palindrome can be expanded from its **center**.
-
-For example:
-
-* `"aba"` → center is at `'b'` (odd-length)
-* `"abba"` → center is between two `'b'`s (even-length)
-
-So, for each character (and each gap between characters), we can:
-
-1. Expand outward while `s[left] == s[right]`
-2. Keep track of the longest palindrome found.
-
----
-
-#### **Step 3: Check both types of palindromes**
-
-For each index `i` in the string:
-
-* Expand for **odd-length** palindrome → center at `i`
-* Expand for **even-length** palindrome → center between `i` and `i + 1`
-
-Take the longer of the two.
-
----
-
-#### **Step 4: Keep track of the longest palindrome**
-
-Maintain:
-
-* `start` → starting index of the current longest palindrome
-* `end` → ending index of the current longest palindrome
-
-Whenever you find a longer palindrome, update `start` and `end`.
-
----
-
-#### **Step 5: Return the substring**
-
-At the end, return `s[start:end + 1]`.
+7. **Combine results** — Join all strings in `rows` to form the final converted string.
 
 
 ---
@@ -134,162 +137,113 @@ At the end, return `s[start:end + 1]`.
 
 ## 🧮 Dry Run
 
-`s = "babad"`
-
-We’ll walk through **each iteration** to see how `start`, `end`, and palindrome lengths change.
-
----
-
-### 🔹 Initialize
-
-```
-start = 0
-end = 0
+```python
+s = "PAYPALISHIRING", numRows = 3
 ```
 
 ---
 
-### 🔹 i = 0 → center = 'b'
+### **Initial Setup**
 
-Check two cases:
-
-1. **Odd-length (expand from "b"):**
-
-   * left = 0, right = 0 → same ('b')
-   * expand → left = -1, right = 1 → stop
-     → length = 1
-
-2. **Even-length (expand between 0,1):**
-
-   * left = 0, right = 1 → 'b' != 'a' → stop
-     → length = 0
-
-Max length = 1
-Since `1 > end - start`, update:
-
+```python
+rows = ['', '', '']  # 3 rows
+currow = 0
+step = 1
 ```
-start = 0
-end = 0
-```
-
-→ current palindrome: `"b"`
 
 ---
 
-### 🔹 i = 1 → center = 'a'
+### **Step 1: Process characters**
 
-1. **Odd-length:**
+**1. 'P'**
 
-   * left = 1, right = 1 → same ('a')
-   * left = 0, right = 2 → both 'b' → same
-   * left = -1, right = 3 → stop
-     → length = 3 → palindrome "bab"
+* `rows[0] += 'P'` → `rows = ['P', '', '']`
+* `currow == 0`, so `step = 1`
+* `currow += step` → `currow = 1`
 
-2. **Even-length:**
+**2. 'A'**
 
-   * left = 1, right = 2 → 'a' != 'b' → stop
-     → length = 0
+* `rows[1] += 'A'` → `rows = ['P', 'A', '']`
+* `currow != 0` and `currow != 2`, `step` stays 1
+* `currow += step` → `currow = 2`
 
-Max length = 3
-Since `3 > end - start`, update:
+**3. 'Y'**
 
-```
-start = 0
-end = 2
-```
+* `rows[2] += 'Y'` → `rows = ['P', 'A', 'Y']`
+* `currow == numRows-1`, so `step = -1`
+* `currow += step` → `currow = 1`
 
-→ current palindrome: `"bab"`
+**4. 'P'**
 
----
+* `rows[1] += 'P'` → `rows = ['P', 'AP', 'Y']`
+* `currow += step` → `currow = 0`
 
-### 🔹 i = 2 → center = 'b'
+**5. 'A'**
 
-1. **Odd-length:**
+* `rows[0] += 'A'` → `rows = ['PA', 'AP', 'Y']`
+* `currow == 0`, so `step = 1`
+* `currow += step` → `currow = 1`
 
-   * left = 2, right = 2 → same ('b')
-   * left = 1, right = 3 → both 'a' → same
-   * left = 0, right = 4 → 'b' != 'd' → stop
-     → length = 3 → palindrome "aba"
+**6. 'L'**
 
-2. **Even-length:**
+* `rows[1] += 'L'` → `rows = ['PA', 'APL', 'Y']`
+* `currow += step` → `currow = 2`
 
-   * left = 2, right = 3 → 'b' != 'a' → stop
-     → length = 0
+**7. 'I'**
 
-Max length = 3
-Since `3 == end - start` (no improvement), keep current:
+* `rows[2] += 'I'` → `rows = ['PA', 'APL', 'YI']`
+* `currow == 2`, so `step = -1`
+* `currow += step` → `currow = 1`
 
-```
-start = 0
-end = 2
-```
+**8. 'S'**
 
-→ longest still `"bab"`
+* `rows[1] += 'S'` → `rows = ['PA', 'APLS', 'YI']`
+* `currow += step` → `currow = 0`
 
----
+**9. 'H'**
 
-### 🔹 i = 3 → center = 'a'
+* `rows[0] += 'H'` → `rows = ['PAH', 'APLS', 'YI']`
+* `currow == 0`, so `step = 1`
+* `currow += step` → `currow = 1`
 
-1. **Odd-length:**
+**10. 'I'**
 
-   * left = 3, right = 3 → same ('a')
-   * left = 2, right = 4 → 'b' != 'd' → stop
-     → length = 1
+* `rows[1] += 'I'` → `rows = ['PAH', 'APLSI', 'YI']`
+* `currow += step` → `currow = 2`
 
-2. **Even-length:**
+**11. 'R'**
 
-   * left = 3, right = 4 → 'a' != 'd' → stop
-     → length = 0
+* `rows[2] += 'R'` → `rows = ['PAH', 'APLSI', 'YIR']`
+* `currow == 2`, so `step = -1`
+* `currow += step` → `currow = 1`
 
-Max length = 1 → no update.
+**12. 'I'**
 
----
+* `rows[1] += 'I'` → `rows = ['PAH', 'APLSII', 'YIR']`
+* `currow += step` → `currow = 0`
 
-### 🔹 i = 4 → center = 'd'
+**13. 'N'**
 
-1. **Odd-length:**
+* `rows[0] += 'N'` → `rows = ['PAHN', 'APLSII', 'YIR']`
+* `currow == 0`, so `step = 1`
+* `currow += step` → `currow = 1`
 
-   * left = 4, right = 4 → same ('d')
-   * left = 3, right = 5 → stop
-     → length = 1
+**14. 'G'**
 
-2. **Even-length:**
-
-   * left = 4, right = 5 → stop
-     → length = 0
-
-No update.
+* `rows[1] += 'G'` → `rows = ['PAHN', 'APLSIIG', 'YIR']`
 
 ---
 
-### ✅ Result
+### **Step 2: Join Rows**
 
-After the loop:
-
-```
-start = 0
-end = 2
+```python
+''.join(rows)  # "PAHNAPLSIIGYIR"
 ```
 
-→ longest palindrome substring = `s[0:3] = "bab"`
-
 ---
 
-### 🧠 Summary Table
 
-| i | Odd Palindrome | Even Palindrome | Longest So Far |
-| - | -------------- | --------------- | -------------- |
-| 0 | "b" (len 1)    | "" (len 0)      | "b"            |
-| 1 | "bab" (len 3)  | "" (len 0)      | "bab"          |
-| 2 | "aba" (len 3)  | "" (len 0)      | "bab"/"aba"    |
-| 3 | "a" (len 1)    | "" (len 0)      | "bab"          |
-| 4 | "d" (len 1)    | "" (len 0)      | "bab"          |
 
----
-
-✅ **Final Output:** `"bab"` (or `"aba"`, both valid)
-
----
 
 ### 📎 Connect with Me
 
