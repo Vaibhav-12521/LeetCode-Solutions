@@ -1,86 +1,65 @@
-# 🧮 LeetCode Problem 6 - Zigzag Conversion
+# 🧮 LeetCode Problem 7 - Reverse Integer
 
 
 **Difficulty:** Medium    
-
-**Language Used:** C, Python 
 
 ---
 
 ## 🧾 Problem Statement  
 
-The string `'PAYPALISHIRING'` is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+Given a signed 32-bit integer `x`, return `x` with its digits reversed. If reversing `x` causes the value to go outside the signed 32-bit integer range `[-231, 231 - 1]`, then return `0`.
 
-```
-P   A   H   N
-A P L S I I G
-Y   I   R
-```
-And then read line by line: `'PAHNAPLSIIGYIR'`
-
-Write the code that will take a string and make this conversion given a number of rows:
-
-`string convert(string s, int numRows);`
+**Assume the environment does not allow you to store 64-bit integers (signed or unsigned)**.
 
  
 ---
 
 ## 💡 Example 1  
 ```
-Input: s = "PAYPALISHIRING", numRows = 3
-Output: "PAHNAPLSIIGYIR"
+Input: x = 123
+Output: 321
 
 ```
 ---
 
 ## 💡 Example 2  
 ```
-Input: s = "PAYPALISHIRING", numRows = 4
-Output: "PINALSIGYAHRPI"
-Explanation:
-P     I    N
-A   L S  I G
-Y A   H R
-P     I
+Input: x = -123
+Output: -321
 
 ```
 
 ## 💡 Example 3  
 ```
-Input: s = "A", numRows = 1
-Output: "A"
+Input: x = 120
+Output: 21
 
 ```
 
 ---
 
 ## ⚙️ Constraints   
-- `1 <= s.length <= 1000`
-- s consists of English letters (lower-case and upper-case), `','` and `'.'`.
-- `1 <= numRows <= 1000`
+- `-231 <= x <= 231 - 1`
 
 ## 💻 C Solution
 
 ```c
-char* convert(char* s, int numRows) {
-    int len = 0; 
-    while (s[len]) len++;
-    if (numRows == 1 || numRows >= len) return s;
 
-    char* res = (char*)malloc(len + 1);
-    int cycle = 2 * numRows - 2, idx = 0;
+int reverse(int x){
+    int rev = 0;
+    const int max = 2147483647;   
+    const int min = -2147483648;
+    while(x != 0){
+        int pop = x % 10;
+        x /= 10;
+        
+        if (rev > max / 10 || (rev == max / 10 && pop > 7)) return 0;
+        if (rev < min / 10 || (rev == min / 10 && pop < -8)) return 0;
 
-    for (int i = 0; i < numRows; i++) {
-        for (int j = i; j < len; j += cycle) {
-            res[idx++] = s[j];
-            if (i != 0 && i != numRows - 1) {
-                int k = j + cycle - 2 * i;
-                if (k < len) res[idx++] = s[k];
-            }
-        }
+        rev = rev * 10 + pop;
     }
-    res[idx] = '\0';
-    return res;
+    return rev;
+
 }
 
 
@@ -113,11 +92,30 @@ class Solution:
 ```
 ---
 
-
-
-
 ## ⚙️ Step-by-Step Solution
 
+1. **Initialize**
+
+   * `rev = 0`
+   * `INT_MAX = 2147483647`, `INT_MIN = -2147483648`
+
+2. **Loop while `x != 0`**
+
+   * `pop = x % 10` → extract last digit
+   * `x = x / 10` → remove last digit
+
+3. **Check overflow**
+
+   * if `rev > INT_MAX/10` or (`rev == INT_MAX/10` and `pop > 7`) → return 0
+   * if `rev < INT_MIN/10` or (`rev == INT_MIN/10` and `pop < -8`) → return 0
+
+4. **Build reversed number**
+
+   * `rev = rev * 10 + pop`
+
+5. **Return result**
+
+   * `return rev`
 
 ---
 
@@ -126,6 +124,91 @@ class Solution:
 
 ## 🧮 Dry Run
 
+
+### 🔹 Example
+
+`x = -123`
+
+---
+
+### **Initial values**
+
+```
+rev = 0
+INT_MAX = 2147483647
+INT_MIN = -2147483648
+```
+
+---
+
+### **Iteration 1**
+
+```
+pop = x % 10 = -123 % 10 = -3
+x = x / 10 = -123 / 10 = -12
+```
+
+Check overflow:
+
+```
+rev = 0 → safe
+```
+
+Build reversed number:
+
+```
+rev = 0 * 10 + (-3) = -3
+```
+
+---
+
+### **Iteration 2**
+
+```
+pop = -12 % 10 = -2
+x = -12 / 10 = -1
+```
+
+Check overflow:
+
+```
+rev = -3 → safe
+```
+
+Build reversed number:
+
+```
+rev = (-3) * 10 + (-2) = -32
+```
+
+---
+
+### **Iteration 3**
+
+```
+pop = -1 % 10 = -1
+x = -1 / 10 = 0
+```
+
+Check overflow:
+
+```
+rev = -32 → safe
+```
+
+Build reversed number:
+
+```
+rev = (-32) * 10 + (-1) = -321
+```
+
+---
+
+### **End**
+
+`x = 0` → stop.
+
+✅ **Final result:** `rev = -321`
 
 
 ---
